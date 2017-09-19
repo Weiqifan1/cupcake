@@ -26,7 +26,8 @@
             <input type="text" name="imagelink" value="http://"><br><br>
             <input type="submit" name="submit" value="Add">
         </form>
-
+        <br>
+        <a href="<%="showrecipes.jsp"%>"><%="Gå til showrecipes"%></a>
 
     </body>
 </html>

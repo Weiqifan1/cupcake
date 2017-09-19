@@ -12,9 +12,22 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World! - christian super</h1>
         
+        <%--
+        <h1>Hello World! - christian super</h1>
         <% out.print(2*5); %>  
         <a href="Control">Klik her for at se alle brugere</a>
+        --%>
+        
+        <%--
+        <jsp:forward page="addrecipe.jsp"></jsp:forward>
+        --%>
+        
+        <h1>Add recipe - hold Chess</h1>
+        
+        <br><br>
+        
+        <a href="<%="addrecipe.jsp"%>"><%="Gå til addrecipe"%></a>
+        
     </body>
 </html>
