@@ -11,7 +11,8 @@ import java.util.List;
  *
  * @author Thomas Hartmann - tha@cphbusiness.dk created on Sep 4, 2017 
  */
-public class UserMapper {                                   // 2017-09-18
+public class UserMapper {    
+    // 2017-09-18
     public List<String> getAllUsers() throws SQLException{ //return list of strings
         String sql = "SELECT subject FROM opskrift.tasks";
         PreparedStatement pstmt = Connector.getConnection().prepareStatement(sql);
