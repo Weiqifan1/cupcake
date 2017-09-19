@@ -21,6 +21,11 @@ public class Ingredient {
         return ingredient;
     }
 
+    @Override
+    public String toString() {
+        return "<br>ingredient=" + ingredient;
+    }
+
      
     
 }

@@ -15,12 +15,12 @@ public class Recipe {
 
     private final String name;
     private final ArrayList<Ingredient> ingredientList;
-    private final String instructions;
+    private final String instruction;
 
-    public Recipe(String name, ArrayList<Ingredient> ingredientList, String instructions) {
+    public Recipe(String name, ArrayList<Ingredient> ingredientList, String instruction) {
         this.name = name;
         this.ingredientList = ingredientList;
-        this.instructions = instructions;
+        this.instruction = instruction;
     }
 
     public String getName() {
@@ -32,7 +32,18 @@ public class Recipe {
     }
 
     public String getInstructions() {
-        return instructions;
+        return instruction;
+    }
+
+    @Override
+    public String toString() {
+        String out;
+        out =  "Name=" + name;
+        for (Ingredient i : ingredientList) {
+            out += i.toString();
+        }
+        out += "<br>Instructions=" + instruction;
+        return out;
     }
     
     
