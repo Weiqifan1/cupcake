@@ -46,12 +46,12 @@ public class Recipe {
     @Override
     public String toString() {
         String out;
-        out =  "Name=" + name;
+        out =  "Name = " + name;
         for (Ingredient i : ingredientList) {
             out += i.toString();
         }
-        out += "<br>Instructions=" + instruction;
-        out += "<br>Image URL=" + imageUrl;
+        out += "<br>Instructions = " + instruction;
+        out += "<br>Image URL = " + imageUrl;
         return out;
     }
     

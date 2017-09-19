@@ -7,6 +7,7 @@ package control;
 
 import Entities.Ingredient;
 import Entities.Recipe;
+import data.RecipeMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddRecipeServlet extends HttpServlet {
 
     private static final Map<String, Recipe> recipes = new HashMap();
-    
+    private RecipeMapper Putter = new RecipeMapper();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,41 +40,42 @@ public class AddRecipeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         try {
             String name = request.getParameter("recname");
             String instruction = request.getParameter("description");
             String imageUrl = request.getParameter("imagelink");
-            
+
             ArrayList<Ingredient> ingredients = new ArrayList();
             String ingredientString = request.getParameter("ingredients");
             String[] iList = ingredientString.split(";");
             for (String s : iList) {
                 ingredients.add(new Ingredient(s));
             }
-            
+
             Recipe newRecipe = new Recipe(name, ingredients, instruction, imageUrl);
+            Putter.putRecipe(newRecipe);
             recipes.put(name, newRecipe);
-            
-                String output = newRecipe.toString();
-                try (PrintWriter out = response.getWriter()) {
-                    /* TODO output your page here. You may use following sample code. */
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Order Viewer:</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<div align=\"center\">");
-                    out.println(output);
-                    out.println("<br><br>");
-                    out.println("</div>");
-                    out.println("</body>");
-                    out.println("</html>");
-                }
-            
+
+            String output = newRecipe.toString();
+            try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Order Viewer:</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<div align=\"center\">");
+                out.println(output);
+                out.println("<br><br>");
+                out.println("</div>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+
         } catch (Exception e) {
-            
+
         }
     }
 
