@@ -7,6 +7,7 @@ package data;
 
 import Entities.Ingredient;
 import Entities.Recipe;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class RecipeMapper {
 
     public int getRecipeId(String name) throws SQLException { //return list of strings
         int recipeId = 0;
-        String sql = "select recipe_id from recipes where name='"+name+"'";
+        String sql = "select recipe_id from recipes where name='" + name + "'";
         PreparedStatement pstmt = Connector.getConnection().prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
@@ -45,8 +46,6 @@ public class RecipeMapper {
         return recipeId;
     }
 
-    
-    
     public Recipe getRecipe(int id) throws SQLException { //return list of strings
         Recipe out = null;
         String sql = "SELECT name,ingredients, instructions,image_url FROM opskrift.recipes where recipe_id=" + id;
@@ -63,37 +62,46 @@ public class RecipeMapper {
             for (String s : iList) {
                 recipeIngredients.add(new Ingredient(s));
             }
-            
-            out = new Recipe(recipeName,recipeIngredients, recipeInstruction, recipeImage);
+
+            out = new Recipe(recipeName, recipeIngredients, recipeInstruction, recipeImage);
         }
         return out;
-        
+
     }
-  public void putRecipe(Recipe recipe) throws SQLException { //return list of strings
-             
+
+    public void putRecipe(Recipe recipe) throws SQLException { //return list of strings
+        Connection conn = Connector.getConnection();
         String insertRecipe = "insert into recipes (name, ingredients, instructions, image_url) values (?, ?, ?, ?)";
-        PreparedStatement recipePstmt = Connector.getConnection().prepareStatement(insertRecipe);
-        
+        PreparedStatement recipePstmt = conn.prepareStatement(insertRecipe);
+
         recipePstmt.setString(1, recipe.getName());
-        
+
         ArrayList<Ingredient> ingredientsList = recipe.getIngredientList();
         String ingredients = "";
         for (Ingredient ing : ingredientsList) {
-            ingredients += ing.getIngredient()+";";
+            ingredients += ing.getIngredient() + ";";
         }
         int len = ingredients.length();
-        ingredients = ingredients.substring(0,len-1);
-        
-        recipePstmt.setString(2, ingredients);
-        recipePstmt.setString(3, recipe.getInstruction());
-        recipePstmt.setString(4, recipe.getImageUrl());
-        
-        recipePstmt.executeUpdate();
-        
-  }
+        ingredients = ingredients.substring(0, len - 1);
+
+        try {
+            conn.setAutoCommit(false);
+            recipePstmt.setString(2, ingredients);
+            recipePstmt.setString(3, recipe.getInstruction());
+            recipePstmt.setString(4, recipe.getImageUrl());
+            recipePstmt.executeUpdate();
+            conn.commit();
+        } catch (SQLException ex) {
+            if (conn != null) {
+                conn.rollback();
+            }
+        } finally {
+            conn.setAutoCommit(true);
+        }
+    }
 
     public static void main(String[] args) throws SQLException {
-        
+
 //        List<String> names = new RecipeMapper().getAllRecipeNames();
 //        for (String name : names) {
 //            System.out.println(name);
@@ -113,7 +121,6 @@ public class RecipeMapper {
 //        
 //        RecipeMapper Putter = new RecipeMapper();
 //        Putter.putRecipe(testPut);
-    
     }
 
 }
