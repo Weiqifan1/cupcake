@@ -31,6 +31,19 @@ public class RecipeMapper {
         return names;
     }
 
+    public int getRecipeId(String name) throws SQLException { //return list of strings
+        int recipeId = 0;
+        String sql = "select recipe_id from recipes where name='"+name+"'";
+        PreparedStatement pstmt = Connector.getConnection().prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            recipeId = rs.getInt("recipes.recipe_id");
+        }
+        return recipeId;
+    }
+
+    
+    
     public Recipe getRecipe(int id) throws SQLException { //return list of strings
         Recipe out = null;
         String sql = "SELECT name,ingredients, instructions,image_url FROM opskrift.recipes where recipe_id=" + id;
@@ -61,6 +74,10 @@ public class RecipeMapper {
         
         Recipe test = new RecipeMapper().getRecipe(1);
         System.out.println(test);
+        
+        int testId = new RecipeMapper().getRecipeId("lagkage");
+        System.out.println(testId);
+        
     }
 
 }
