@@ -12,6 +12,20 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World! - addrecipe</h1>
+        <h1>Addrecipe</h1>
+
+        <form action="AddRecipeServlet">       
+            <h2>Add New Recipe:</h2>
+
+            <b>Recipe name:</b><br>
+            <input type="text" name="recname" value=""><br><br>
+            <b>Ingredients:</b><br>
+            <textarea name="ingridient" rows="10" cols="40"></textarea><br><br>
+            <b>Instructions:</b><br>
+            <textarea name="instuction" rows="10" cols="40"></textarea><br><br>
+            <input type="submit" name="submit" value="Add">
+        </form>
+
+
     </body>
 </html>
