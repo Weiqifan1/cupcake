@@ -16,11 +16,13 @@ public class Recipe {
     private final String name;
     private final ArrayList<Ingredient> ingredientList;
     private final String instruction;
+    private final String imageUrl;
 
-    public Recipe(String name, ArrayList<Ingredient> ingredientList, String instruction) {
+    public Recipe(String name, ArrayList<Ingredient> ingredientList, String instruction, String imageUrl) {
         this.name = name;
         this.ingredientList = ingredientList;
         this.instruction = instruction;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
@@ -31,9 +33,15 @@ public class Recipe {
         return ingredientList;
     }
 
-    public String getInstructions() {
+    public String getInstruction() {
         return instruction;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    
+    
 
     @Override
     public String toString() {
@@ -43,6 +51,7 @@ public class Recipe {
             out += i.toString();
         }
         out += "<br>Instructions=" + instruction;
+        out += "<br>Image URL=" + imageUrl;
         return out;
     }
     

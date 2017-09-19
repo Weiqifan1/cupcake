@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Add New Recipe:</h1>
+        <h2>Add New Recipe:</h2>
 
         <form action="AddRecipeServlet">       
             <b>Recipe name:</b><br>
@@ -22,6 +22,8 @@
             <textarea name="ingredients" rows="10" cols="40"></textarea><br><br>
             <b>Instructions:</b><br>
             <textarea name="description" rows="10" cols="40"></textarea><br><br>
+            <b>Image URL:</b><br>
+            <input type="text" name="imagelink" value="http://"><br><br>
             <input type="submit" name="submit" value="Add">
         </form>
 

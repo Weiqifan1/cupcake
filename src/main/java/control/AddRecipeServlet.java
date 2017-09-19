@@ -43,13 +43,16 @@ public class AddRecipeServlet extends HttpServlet {
         try {
             String name = request.getParameter("recname");
             String instruction = request.getParameter("description");
+            String imageUrl = request.getParameter("imagelink");
+            
             ArrayList<Ingredient> ingredients = new ArrayList();
             String ingredientString = request.getParameter("ingredients");
             String[] iList = ingredientString.split(";");
             for (String s : iList) {
                 ingredients.add(new Ingredient(s));
             }
-            Recipe newRecipe = new Recipe(name, ingredients, instruction);
+            
+            Recipe newRecipe = new Recipe(name, ingredients, instruction, imageUrl);
             recipes.put(name, newRecipe);
             
                 String output = newRecipe.toString();
