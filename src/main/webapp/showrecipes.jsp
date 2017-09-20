@@ -4,6 +4,7 @@
     Author     : Christian
 --%>
 
+<%@page import="java.util.Collections"%>
 <%@page import="java.util.List"%>
 <%@ page import="data.RecipeMapper" %>
 
@@ -16,26 +17,27 @@
     </head>
     <body>
         <h1>Hello Customer!</h1>
-        
+        <br>
+        <p>Here are the recipes:</p>
+        <br>
         <%
         String output = "";
         try {        
             RecipeMapper rm = new RecipeMapper();
             List<String> mylist = rm.getAllRecipeNames();
+            Collections.sort(mylist, String.CASE_INSENSITIVE_ORDER);
             output = output+"<p>";
             for (String s: mylist) {
-                    out.println( "<a href =" + "chrrecipe.jsp" +
+                    out.println( "<a href =" + "showrecipe.jsp" +
                             "?value="+ s +
-                            "> " + s + "</a>");
+                            "> " + s + "</a>"
+                            + "<br>");
             }
         } catch (Exception e) {
             out.print("Der er ingen forbindelse til serveren");
         }
         %>    
-        
-        Here are the recepies:
-        <br>
-        <%= output %>
+              
         
         
     </body>
