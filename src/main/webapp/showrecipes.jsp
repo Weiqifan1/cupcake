@@ -24,10 +24,12 @@
             List<String> mylist = rm.getAllRecipeNames();
             output = output+"<p>";
             for (String s: mylist) {
-                output = output + s +"<br>";
+                    out.println( "<a href =" + "chrrecipe.jsp" +
+                            "?value="+ s +
+                            "> " + s + "</a>");
             }
-            output = output + "</p>";
         } catch (Exception e) {
+            out.print("Der er ingen forbindelse til serveren");
         }
         %>    
         
@@ -39,4 +41,5 @@
     </body>
     <br>
     <a href="<%="addrecipe.jsp"%>"><%="Gå til addrecipe"%></a>
+    
 </html>
