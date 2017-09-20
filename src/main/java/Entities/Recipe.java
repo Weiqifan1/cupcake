@@ -29,6 +29,10 @@ public class Recipe {
         return name;
     }
 
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredientList;
+    }
+    
     public ArrayList<Ingredient> getIngredientList() {
         return ingredientList;
     }
@@ -46,7 +50,7 @@ public class Recipe {
     @Override
     public String toString() {
         String out;
-        out =  "Name = " + name;
+        out =  "Name = " + name + "<br>Ingedients: ";
         for (Ingredient i : ingredientList) {
             out += i.toString();
         }

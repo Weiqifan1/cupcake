@@ -21,13 +21,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author GertLehmann
+ * @author Christian
  */
-@WebServlet(name = "AddRecipeServlet", urlPatterns = {"/AddRecipeServlet"})
-public class AddRecipeServlet extends HttpServlet {
+@WebServlet(name = "UpdateRecipeServlet", urlPatterns = {"/UpdateRecipeServlet"})
+public class UpdateRecipeServlet extends HttpServlet {
 
-    private static final Map<String, Recipe> recipes = new HashMap();
+    
+    //private static final Map<String, Recipe> recipes = new HashMap();
     private RecipeMapper Putter = new RecipeMapper();
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,8 +42,8 @@ public class AddRecipeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         try {
+            int id = Integer.parseInt(request.getParameter("id"));
             String name = request.getParameter("recname");
             String instruction = request.getParameter("description");
             String imageUrl = request.getParameter("imagelink");
@@ -54,11 +56,10 @@ public class AddRecipeServlet extends HttpServlet {
             }
 
             Recipe newRecipe = new Recipe(name, ingredients, instruction, imageUrl);
-            Putter.putRecipe(newRecipe);
-            
-            recipes.put(name, newRecipe);
+            Putter.updateRecipe(newRecipe, id);
+            //recipes.put(name, newRecipe);
 
-            String output = newRecipe.toString();
+                        String output = newRecipe.toString();
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");

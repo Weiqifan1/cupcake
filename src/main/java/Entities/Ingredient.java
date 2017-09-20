@@ -23,7 +23,7 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return "<br>ingredient = " + ingredient;
+        return ingredient + "; ";
     }
 
      

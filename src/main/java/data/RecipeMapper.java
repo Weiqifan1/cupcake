@@ -74,6 +74,8 @@ public class RecipeMapper {
         String insertRecipe = "insert into recipes (name, ingredients, instructions, image_url) values (?, ?, ?, ?)";
         PreparedStatement recipePstmt = conn.prepareStatement(insertRecipe);
 
+        try {
+        conn.setAutoCommit(false);
         recipePstmt.setString(1, recipe.getName());
 
         ArrayList<Ingredient> ingredientsList = recipe.getIngredientList();
@@ -84,8 +86,39 @@ public class RecipeMapper {
         int len = ingredients.length();
         ingredients = ingredients.substring(0, len - 1);
 
+            recipePstmt.setString(2, ingredients);
+            recipePstmt.setString(3, recipe.getInstruction());
+            recipePstmt.setString(4, recipe.getImageUrl());
+            recipePstmt.executeUpdate();
+            conn.commit();
+        } catch (SQLException ex) {
+            if (conn != null) {
+                conn.rollback();
+            }
+        } finally {
+            conn.setAutoCommit(true);
+        }
+    }
+
+   
+    public void updateRecipe(Recipe recipe, int id) throws SQLException { //return list of strings
+        Connection conn = Connector.getConnection();
+        String insertRecipe = "update recipes set name=?, ingredients=?, instructions=?, image_url=? "
+                + "where recipe_id = " + id;
+        PreparedStatement recipePstmt = conn.prepareStatement(insertRecipe);
+
         try {
             conn.setAutoCommit(false);
+            recipePstmt.setString(1, recipe.getName());
+
+            ArrayList<Ingredient> ingredientsList = recipe.getIngredientList();
+            String ingredients = "";
+            for (Ingredient ing : ingredientsList) {
+                ingredients += ing.getIngredient() + ";";
+            }
+            int len = ingredients.length();
+            ingredients = ingredients.substring(0, len - 1);
+
             recipePstmt.setString(2, ingredients);
             recipePstmt.setString(3, recipe.getInstruction());
             recipePstmt.setString(4, recipe.getImageUrl());
